@@ -1,7 +1,7 @@
 package org.example.processor.impl;
 
 
-import org.example.data.BinaryTreeDao;
+import org.example.data.BinaryTree;
 import org.example.model.Node;
 import org.example.processor.IGameProcessor;
 import org.example.utils.ConsoleReader;
@@ -13,17 +13,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class AnimalSearcher implements IGameProcessor {
-    private final BinaryTreeDao binaryTreeDao;
+    private final BinaryTree binaryTree;
 
-    public AnimalSearcher(BinaryTreeDao binaryTreeDao) {
-        this.binaryTreeDao = binaryTreeDao;
+    public AnimalSearcher(BinaryTree binaryTree) {
+        this.binaryTree = binaryTree;
     }
 
     @Override
     public void start() {
         String animalName = ConsoleReader.readConsole(LanguageRules.getMessage("tree.search.prompt"));
         animalName = LanguageRules.applyRules(animalName, "animalName");
-        Node root = binaryTreeDao.getRoot();
+        Node root = binaryTree.getRoot();
         if (root == null) {
             throw new RuntimeException("Tree is null");
         }

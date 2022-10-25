@@ -2,19 +2,15 @@ package org.example.utils;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.MissingResourceException;
+import java.util.Objects;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import static java.util.Objects.isNull;
-import static java.util.stream.Collectors.toUnmodifiableMap;
 
 public class LanguageRules {
     private static final Random random = new Random();
@@ -41,19 +37,22 @@ public class LanguageRules {
         ResourceBundle patternsBundle = ResourceBundle.getBundle("patterns");
         patterns = patternsBundle.keySet().stream()
                 .filter(key -> key.endsWith(".pattern"))
-                .collect(toUnmodifiableMap(key -> key.replace(".pattern", ""),
+                .collect(Collectors.toUnmodifiableMap(key -> key.replace(".pattern", ""),
                         key -> Pattern.compile(patternsBundle.getString(key), Pattern.CASE_INSENSITIVE)));
         replacements = patternsBundle.keySet().stream()
                 .filter(key -> key.endsWith(".replace"))
-                .collect(Collectors.toUnmodifiableMap(key -> key.replace(".replace", ""), patternsBundle::getString));
-        farewells = new HashSet<>(messages.keySet().stream()
+                .collect(Collectors.toUnmodifiableMap(key -> key.replace(".replace", ""),
+                        patternsBundle::getString));
+        farewells = messages.keySet().stream()
                 .filter(key -> key.startsWith("farewell"))
-                .collect(Collectors.toMap(Function.identity(), messages::getString)).values());
-        excuses = new HashSet<>(messages.keySet().stream()
+                .map(messages::getString)
+                .collect(Collectors.toSet());
+        excuses = messages.keySet().stream()
                 .filter(key -> key.startsWith("ask.again"))
-                .collect(Collectors.toMap(Function.identity(), messages::getString)).values());
-        checkingPatterns = patternsBundle.keySet()
-                .stream().filter(key -> key.endsWith(".isCorrect"))
+                .map(messages::getString)
+                .collect(Collectors.toSet());
+        checkingPatterns = patternsBundle.keySet().stream()
+                .filter(key -> key.endsWith(".isCorrect"))
                 .collect(Collectors.toUnmodifiableMap(key -> key.replace(".isCorrect", ""),
                         key -> Pattern.compile(patternsBundle.getString(key), Pattern.CASE_INSENSITIVE)));
     }
@@ -84,7 +83,7 @@ public class LanguageRules {
             key = patternName + "." + i;
             pattern = patterns.get(key);
 
-            if (isNull(pattern)) {
+            if (Objects.isNull(pattern)) {
                 return input;
             }
             matcher = pattern.matcher(input);

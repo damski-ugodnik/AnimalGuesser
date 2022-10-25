@@ -1,7 +1,7 @@
 package org.example.processor.impl;
 
 
-import org.example.data.BinaryTreeDao;
+import org.example.data.BinaryTree;
 import org.example.model.Node;
 import org.example.processor.IGameProcessor;
 import org.example.utils.Constants;
@@ -12,20 +12,20 @@ import java.util.Comparator;
 import java.util.List;
 
 public class AnimalListProcessor implements IGameProcessor {
-    private final BinaryTreeDao binaryTreeDao;
+    private final BinaryTree binaryTree;
 
-    public AnimalListProcessor(BinaryTreeDao binaryTreeDao) {
-        this.binaryTreeDao = binaryTreeDao;
+    public AnimalListProcessor(BinaryTree binaryTree) {
+        this.binaryTree = binaryTree;
     }
 
     @Override
     public void start() {
-        Node root = binaryTreeDao.getRoot();
+        Node root = binaryTree.getRoot();
         if (root == null) {
             throw new RuntimeException("Tree is null");
         }
         List<Node> leaves = new ArrayList<>();
-        getAllLeaves(root, leaves);
+        fillLeavesList(root, leaves);
         System.out.println(LanguageRules.getMessage("tree.list.animals"));
         leaves.sort(Comparator.comparing(Node::getValue));
         for (Node leaf : leaves) {
@@ -43,12 +43,12 @@ public class AnimalListProcessor implements IGameProcessor {
         return getNumber() + ". " + LanguageRules.getMessage("menu.entry.list");
     }
 
-    private void getAllLeaves(Node root, List<Node> leaves) {
+    private void fillLeavesList(Node root, List<Node> leaves) {
         if (root.isLeaf()) {
             leaves.add(root);
             return;
         }
-        getAllLeaves(root.getPositiveResultNode(), leaves);
-        getAllLeaves(root.getNegativeResultNode(), leaves);
+        fillLeavesList(root.getPositiveResultNode(), leaves);
+        fillLeavesList(root.getNegativeResultNode(), leaves);
     }
 }

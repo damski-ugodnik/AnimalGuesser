@@ -1,6 +1,6 @@
 package org.example.processor.impl;
 
-import org.example.data.BinaryTreeDao;
+import org.example.data.BinaryTree;
 import org.example.model.Node;
 import org.example.processor.IGameProcessor;
 import org.example.utils.AnswerProcessor;
@@ -9,9 +9,9 @@ import org.example.utils.Constants;
 import org.example.utils.LanguageRules;
 
 public class BinaryAnimalLearner implements IGameProcessor {
-    private final BinaryTreeDao dao;
+    private final BinaryTree dao;
 
-    public BinaryAnimalLearner(BinaryTreeDao dao) {
+    public BinaryAnimalLearner(BinaryTree dao) {
         this.dao = dao;
     }
 

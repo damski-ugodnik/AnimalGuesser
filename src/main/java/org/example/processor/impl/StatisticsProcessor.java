@@ -1,21 +1,21 @@
 package org.example.processor.impl;
 
-import org.example.data.BinaryTreeDao;
+import org.example.data.BinaryTree;
 import org.example.model.BinaryTreeStatistic;
 import org.example.model.Node;
 import org.example.processor.IGameProcessor;
 import org.example.utils.LanguageRules;
 
 public class StatisticsProcessor implements IGameProcessor {
-    private final BinaryTreeDao binaryTreeDao;
+    private final BinaryTree binaryTree;
 
-    public StatisticsProcessor(BinaryTreeDao binaryTreeDao) {
-        this.binaryTreeDao = binaryTreeDao;
+    public StatisticsProcessor(BinaryTree binaryTree) {
+        this.binaryTree = binaryTree;
     }
 
     @Override
     public void start() {
-        Node root = binaryTreeDao.getRoot();
+        Node root = binaryTree.getRoot();
         if (root == null) {
             throw new RuntimeException("Tree is null");
         }

@@ -25,9 +25,9 @@ public enum PeriodOfDay {
     }
 
     public static PeriodOfDay defineCurrentPeriod() {
-        LocalTime now = LocalTime.now();
+        int currentHour = LocalTime.now().getHour();
         for (PeriodOfDay value : values()) {
-            if (now.getHour() >= value.startHour && now.getHour() <= value.finishHour) {
+            if (currentHour > value.startHour && currentHour <= value.finishHour) {
                 return value;
             }
         }

@@ -16,6 +16,7 @@ public class Node {
      * used by Jackson Databind
      */
     public Node() {
+
     }
 
     public Node(String value) {

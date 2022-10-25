@@ -7,12 +7,12 @@ import org.example.utils.Constants;
 import java.io.File;
 import java.io.IOException;
 
-public class BinaryTreeDao {
+public class BinaryTree {
     private Node root;
     private final String fileName;
     private final ObjectMapper objectMapper;
 
-    public BinaryTreeDao(String fileExtension, ObjectMapper objectMapper, String language) {
+    public BinaryTree(String fileExtension, ObjectMapper objectMapper, String language) {
         if (!language.equals("")) {
             language = "_" + language;
         }

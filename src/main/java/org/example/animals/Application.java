@@ -1,6 +1,6 @@
 package org.example.animals;
 
-import org.example.data.BinaryTreeDao;
+import org.example.data.BinaryTree;
 import org.example.model.Node;
 import org.example.model.PeriodOfDay;
 import org.example.processor.GameProcessorFactory;
@@ -13,11 +13,11 @@ import java.util.regex.Matcher;
 
 public class Application {
     private final GameProcessorFactory factory;
-    private final BinaryTreeDao dao;
+    private final BinaryTree dao;
 
-    public Application(GameProcessorFactory factory, BinaryTreeDao binaryTreeDao) {
+    public Application(GameProcessorFactory factory, BinaryTree binaryTree) {
         this.factory = factory;
-        this.dao = binaryTreeDao;
+        this.dao = binaryTree;
     }
 
     public void run() {
@@ -56,7 +56,7 @@ public class Application {
         System.out.println("0. " + LanguageRules.getMessage("menu.property.exit"));
     }
 
-    private void learnIfTreeIsEmpty(BinaryTreeDao dao) {
+    private void learnIfTreeIsEmpty(BinaryTree dao) {
         String input;
         while (true) {
             input = ConsoleReader.readConsole(LanguageRules.getMessage("animal.wantLearn") + Constants.LINE_SEPARATOR +
